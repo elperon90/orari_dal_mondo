@@ -1,0 +1,37 @@
+package orari_mondo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
+
+public class Orari {
+	String jdbcURL ="jdbc:mysql://localhost/ridenti_cittadine?user=root&password=Root";
+	
+	public Orari(){
+		try {
+			conn = DriverManager.getConnection(jdbcURL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		lista = new Listacitta(conn);
+		
+	}
+	
+	private Listacitta lista ;
+	Connection conn ;
+	
+	public void stampaOrari() {
+		Instant nowUtc = Instant.now();
+		 List<Citta>  elencocitta = lista.getcitta();
+		 for(Citta c: elencocitta) {
+			 ZoneId zoneid = ZoneId.of(c.getTimeZone());
+			 ZonedDateTime time = ZonedDateTime.ofInstant(nowUtc, zoneid);
+			 System.out.println(c.getNome()+ time) ;
+		 }
+	}	
+	
+}
