@@ -1,0 +1,10 @@
+package orari_mondo;
+
+public class Main {
+
+	
+	public static void main(String[] args) {
+		Orari orari = new Orari();
+		orari.stampaOrari();
+	}
+}
